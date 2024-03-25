@@ -16,8 +16,12 @@ namespace DoToListAppWindowsForms
             {
                 var categories = db.Categories.ToList();
                 dgv_Categories.DataSource = categories;
-                var firstCategoryTasks = db.Tasks.Where(t => t.CategoryId == categories.First().CategoryId).ToList();
-                dgv_Tasks.DataSource = firstCategoryTasks;
+
+                if (categories.Any())
+                {
+                    var firstCategoryTasks = db.Tasks.Where(t => t.CategoryId == categories.First().CategoryId).ToList();
+                    dgv_Tasks.DataSource = firstCategoryTasks;
+                }
             }
 
             dgv_Categories.Columns["Tasks"].Visible = false;
@@ -38,7 +42,7 @@ namespace DoToListAppWindowsForms
                 dgv_Tasks.DataSource = tasks;
             }
 
-            
+
         }
     }
 }
