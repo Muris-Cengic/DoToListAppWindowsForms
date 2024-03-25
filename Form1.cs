@@ -12,6 +12,11 @@ namespace DoToListAppWindowsForms
 
         private void Form1_Load(object sender, EventArgs e)
         {
+            LoadDataFromDatabase();
+        }
+
+        private void LoadDataFromDatabase()
+        {
             using (TodolistContext db = new TodolistContext())
             {
                 var categories = db.Categories.ToList();
@@ -29,7 +34,6 @@ namespace DoToListAppWindowsForms
 
             dgv_Categories.Columns["Tasks"].Visible = false;
             dgv_Categories.Columns["CategoryId"].Visible = false;
-
         }
 
         private void dgv_Categories_CellClick(object sender, DataGridViewCellEventArgs e)
@@ -41,8 +45,17 @@ namespace DoToListAppWindowsForms
                 var tasks = db.Tasks.Where(t => t.CategoryId == clikedCategory.CategoryId).ToList();
                 dgv_Tasks.DataSource = tasks;
             }
+        }
 
+        private void btn_addcategory_Click(object sender, EventArgs e)
+        {
+            AddCategoryForm addCategoryForm = new AddCategoryForm(dgv_Categories);
+            addCategoryForm.ShowDialog();
+        }
 
+        private void btn_refresh_Click(object sender, EventArgs e)
+        {
+            LoadDataFromDatabase();
         }
     }
 }
