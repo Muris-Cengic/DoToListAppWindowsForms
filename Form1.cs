@@ -21,15 +21,15 @@ namespace DoToListAppWindowsForms
                 {
                     var firstCategoryTasks = db.Tasks.Where(t => t.CategoryId == categories.First().CategoryId).ToList();
                     dgv_Tasks.DataSource = firstCategoryTasks;
+                    dgv_Tasks.Columns["TaskId"].Visible = false;
+                    dgv_Tasks.Columns["CategoryId"].Visible = false;
+                    dgv_Tasks.Columns["Category"].Visible = false;
                 }
             }
 
             dgv_Categories.Columns["Tasks"].Visible = false;
             dgv_Categories.Columns["CategoryId"].Visible = false;
 
-            dgv_Tasks.Columns["TaskId"].Visible = false;
-            dgv_Tasks.Columns["CategoryId"].Visible = false;
-            dgv_Tasks.Columns["Category"].Visible = false;
         }
 
         private void dgv_Categories_CellClick(object sender, DataGridViewCellEventArgs e)
