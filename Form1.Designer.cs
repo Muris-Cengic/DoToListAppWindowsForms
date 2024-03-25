@@ -32,6 +32,8 @@
             dgv_Tasks = new DataGridView();
             label1 = new Label();
             label2 = new Label();
+            btn_addcategory = new Button();
+            btn_refresh = new Button();
             ((System.ComponentModel.ISupportInitialize)dgv_Categories).BeginInit();
             ((System.ComponentModel.ISupportInitialize)dgv_Tasks).BeginInit();
             SuspendLayout();
@@ -91,12 +93,34 @@
             label2.TabIndex = 3;
             label2.Text = "Category Tasks:";
             // 
+            // btn_addcategory
+            // 
+            btn_addcategory.Location = new Point(32, 56);
+            btn_addcategory.Name = "btn_addcategory";
+            btn_addcategory.Size = new Size(116, 33);
+            btn_addcategory.TabIndex = 4;
+            btn_addcategory.Text = "Add Category";
+            btn_addcategory.UseVisualStyleBackColor = true;
+            btn_addcategory.Click += btn_addcategory_Click;
+            // 
+            // btn_refresh
+            // 
+            btn_refresh.Location = new Point(32, 639);
+            btn_refresh.Name = "btn_refresh";
+            btn_refresh.Size = new Size(105, 33);
+            btn_refresh.TabIndex = 5;
+            btn_refresh.Text = "Refresh";
+            btn_refresh.UseVisualStyleBackColor = true;
+            btn_refresh.Click += btn_refresh_Click;
+            // 
             // Form1
             // 
             AutoScaleDimensions = new SizeF(7F, 15F);
             AutoScaleMode = AutoScaleMode.Font;
             BackColor = SystemColors.ActiveBorder;
             ClientSize = new Size(946, 698);
+            Controls.Add(btn_refresh);
+            Controls.Add(btn_addcategory);
             Controls.Add(label2);
             Controls.Add(label1);
             Controls.Add(dgv_Tasks);
@@ -116,5 +140,7 @@
         private DataGridView dgv_Tasks;
         private Label label1;
         private Label label2;
+        private Button btn_addcategory;
+        private Button btn_refresh;
     }
 }
