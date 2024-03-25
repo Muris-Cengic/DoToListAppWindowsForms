@@ -1,6 +1,6 @@
 ﻿namespace DoToListAppWindowsForms
 {
-    partial class Form1
+    partial class MainForm
     {
         /// <summary>
         ///  Required designer variable.
@@ -34,6 +34,7 @@
             label2 = new Label();
             btn_addcategory = new Button();
             btn_refresh = new Button();
+            btn_addTask = new Button();
             ((System.ComponentModel.ISupportInitialize)dgv_Categories).BeginInit();
             ((System.ComponentModel.ISupportInitialize)dgv_Tasks).BeginInit();
             SuspendLayout();
@@ -113,19 +114,31 @@
             btn_refresh.UseVisualStyleBackColor = true;
             btn_refresh.Click += btn_refresh_Click;
             // 
-            // Form1
+            // btn_addTask
+            // 
+            btn_addTask.Enabled = false;
+            btn_addTask.Location = new Point(345, 56);
+            btn_addTask.Name = "btn_addTask";
+            btn_addTask.Size = new Size(118, 33);
+            btn_addTask.TabIndex = 6;
+            btn_addTask.Text = "Add Task";
+            btn_addTask.UseVisualStyleBackColor = true;
+            btn_addTask.Click += btn_addTask_Click;
+            // 
+            // MainForm
             // 
             AutoScaleDimensions = new SizeF(7F, 15F);
             AutoScaleMode = AutoScaleMode.Font;
             BackColor = SystemColors.ActiveBorder;
             ClientSize = new Size(946, 698);
+            Controls.Add(btn_addTask);
             Controls.Add(btn_refresh);
             Controls.Add(btn_addcategory);
             Controls.Add(label2);
             Controls.Add(label1);
             Controls.Add(dgv_Tasks);
             Controls.Add(dgv_Categories);
-            Name = "Form1";
+            Name = "MainForm";
             Text = "TO DO LIST";
             Load += Form1_Load;
             ((System.ComponentModel.ISupportInitialize)dgv_Categories).EndInit();
@@ -142,5 +155,6 @@
         private Label label2;
         private Button btn_addcategory;
         private Button btn_refresh;
+        private Button btn_addTask;
     }
 }

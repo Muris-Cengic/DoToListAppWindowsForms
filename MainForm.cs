@@ -1,11 +1,14 @@
 using DoToListAppWindowsForms.Models;
 using Microsoft.EntityFrameworkCore;
+using System.Runtime.ExceptionServices;
 
 namespace DoToListAppWindowsForms
 {
-    public partial class Form1 : Form
+    public partial class MainForm : Form
     {
-        public Form1()
+        private Category selectedCategory;
+
+        public MainForm()
         {
             InitializeComponent();
         }
@@ -15,7 +18,7 @@ namespace DoToListAppWindowsForms
             LoadDataFromDatabase();
         }
 
-        private void LoadDataFromDatabase()
+        public void LoadDataFromDatabase()
         {
             using (TodolistContext db = new TodolistContext())
             {
@@ -24,7 +27,11 @@ namespace DoToListAppWindowsForms
 
                 if (categories.Any())
                 {
-                    var firstCategoryTasks = db.Tasks.Where(t => t.CategoryId == categories.First().CategoryId).ToList();
+                    btn_addTask.Enabled = true;
+                    selectedCategory = categories.First();
+
+                    var firstCategoryTasks = db.Tasks.Where(t => t.CategoryId == selectedCategory.CategoryId).ToList();
+
                     dgv_Tasks.DataSource = firstCategoryTasks;
                     dgv_Tasks.Columns["TaskId"].Visible = false;
                     dgv_Tasks.Columns["CategoryId"].Visible = false;
@@ -38,24 +45,30 @@ namespace DoToListAppWindowsForms
 
         private void dgv_Categories_CellClick(object sender, DataGridViewCellEventArgs e)
         {
-            Category clikedCategory = (Category)dgv_Categories.Rows[e.RowIndex].DataBoundItem;
-
+            btn_addTask.Enabled = true;
+            selectedCategory = (Category)dgv_Categories.Rows[e.RowIndex].DataBoundItem;
             using (var db = new TodolistContext())
             {
-                var tasks = db.Tasks.Where(t => t.CategoryId == clikedCategory.CategoryId).ToList();
+                var tasks = db.Tasks.Where(t => t.CategoryId == selectedCategory.CategoryId).ToList();
                 dgv_Tasks.DataSource = tasks;
             }
         }
 
         private void btn_addcategory_Click(object sender, EventArgs e)
         {
-            AddCategoryForm addCategoryForm = new AddCategoryForm(dgv_Categories);
+            AddCategoryForm addCategoryForm = new AddCategoryForm(this);
             addCategoryForm.ShowDialog();
         }
 
         private void btn_refresh_Click(object sender, EventArgs e)
         {
             LoadDataFromDatabase();
+        }
+
+        private void btn_addTask_Click(object sender, EventArgs e)
+        {
+            AddTaskForm addTaskForm = new AddTaskForm(selectedCategory, dgv_Tasks);
+            addTaskForm.ShowDialog();
         }
     }
 }
