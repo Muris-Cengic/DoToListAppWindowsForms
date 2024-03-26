@@ -96,17 +96,29 @@ namespace DoToListAppWindowsForms
 
         private void button1_Click(object sender, EventArgs e)
         {
-            var selectedTasks = new List<Models.Task>();
-            foreach (DataGridViewRow row in dgv_Tasks.Rows)
-            {
-                var cellValue = row.Cells["rm"].Value?.ToString() ?? "false";
-                var remove = bool.Parse(cellValue);
-                if (remove)
-                {
-                    selectedTasks.Add(row.DataBoundItem as Models.Task);
-                }
-            }
+            ConfirmationForm confirmationForm = new ConfirmationForm();
+            confirmationForm.ShowDialog();
 
+            if (confirmationForm.isConfirmed)
+            {
+                var selectedTasks = new List<Models.Task>();
+                foreach (DataGridViewRow row in dgv_Tasks.Rows)
+                {
+                    var cellValue = row.Cells["rm"].Value?.ToString() ?? "false";
+                    var remove = bool.Parse(cellValue);
+                    if (remove)
+                    {
+                        selectedTasks.Add(row.DataBoundItem as Models.Task);
+                    }
+                }
+
+                using (var db = new TodolistContext())
+                {
+                    db.Tasks.RemoveRange(selectedTasks);
+                    db.SaveChanges();
+                }
+                LoadDataFromDatabase();
+            }
         }
     }
 }
