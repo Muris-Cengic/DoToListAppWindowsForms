@@ -37,10 +37,13 @@ namespace DoToListAppWindowsForms
                     dgv_Tasks.Columns["CategoryId"].Visible = false;
                     dgv_Tasks.Columns["Category"].Visible = false;
                 }
+                else
+                {
+                    dgv_Tasks.DataSource = null;
+                }
             }
-
-            dgv_Categories.Columns["Tasks"].Visible = false;
-            dgv_Categories.Columns["CategoryId"].Visible = false;
+            //dgv_Categories.Columns["Tasks"].Visible = false;
+            //dgv_Categories.Columns["CategoryId"].Visible = false;
         }
 
         private void dgv_Categories_CellClick(object sender, DataGridViewCellEventArgs e)
@@ -64,11 +67,31 @@ namespace DoToListAppWindowsForms
         {
             LoadDataFromDatabase();
         }
-
         private void btn_addTask_Click(object sender, EventArgs e)
         {
             AddTaskForm addTaskForm = new AddTaskForm(selectedCategory, dgv_Tasks);
             addTaskForm.ShowDialog();
+        }
+
+        private void dgv_Categories_CellContentClick(object sender, DataGridViewCellEventArgs e)
+        {
+            var clickedColumn = dgv_Categories.Columns[e.ColumnIndex];
+
+            if (clickedColumn.Name == "btn_delete_category")
+            {
+                var clickedRow = dgv_Categories.Rows[e.RowIndex];
+
+                Category category = clickedRow.DataBoundItem as Category;
+
+                using (var db = new TodolistContext())
+                {
+                    var tasks = db.Tasks.Where(task => task.CategoryId == category.CategoryId).ToList();
+                    db.Tasks.RemoveRange(tasks);
+                    db.Categories.Remove(category);
+                    db.SaveChanges();
+                }
+            }
+            LoadDataFromDatabase();
         }
     }
 }
