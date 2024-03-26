@@ -33,9 +33,9 @@ namespace DoToListAppWindowsForms
                     var firstCategoryTasks = db.Tasks.Where(t => t.CategoryId == selectedCategory.CategoryId).ToList();
 
                     dgv_Tasks.DataSource = firstCategoryTasks;
-                    dgv_Tasks.Columns["TaskId"].Visible = false;
-                    dgv_Tasks.Columns["CategoryId"].Visible = false;
-                    dgv_Tasks.Columns["Category"].Visible = false;
+                    //dgv_Tasks.Columns["TaskId"].Visible = false;
+                    //dgv_Tasks.Columns["CategoryId"].Visible = false;
+                    //dgv_Tasks.Columns["Category"].Visible = false;
                 }
                 else
                 {
@@ -92,6 +92,21 @@ namespace DoToListAppWindowsForms
                 }
             }
             LoadDataFromDatabase();
+        }
+
+        private void button1_Click(object sender, EventArgs e)
+        {
+            var selectedTasks = new List<Models.Task>();
+            foreach (DataGridViewRow row in dgv_Tasks.Rows)
+            {
+                var cellValue = row.Cells["rm"].Value?.ToString() ?? "false";
+                var remove = bool.Parse(cellValue);
+                if (remove)
+                {
+                    selectedTasks.Add(row.DataBoundItem as Models.Task);
+                }
+            }
+
         }
     }
 }

@@ -30,22 +30,32 @@
         {
             components = new System.ComponentModel.Container();
             dgv_Categories = new DataGridView();
+            categoryIdDataGridViewTextBoxColumn = new DataGridViewTextBoxColumn();
+            categoryNameDataGridViewTextBoxColumn = new DataGridViewTextBoxColumn();
+            tasksDataGridViewTextBoxColumn = new DataGridViewTextBoxColumn();
+            btn_delete_category = new DataGridViewButtonColumn();
+            categoryBindingSource1 = new BindingSource(components);
             dgv_Tasks = new DataGridView();
+            taskIdDataGridViewTextBoxColumn = new DataGridViewTextBoxColumn();
+            titleDataGridViewTextBoxColumn = new DataGridViewTextBoxColumn();
+            dateCreatedDataGridViewTextBoxColumn = new DataGridViewTextBoxColumn();
+            isCompletedDataGridViewCheckBoxColumn = new DataGridViewCheckBoxColumn();
+            categoryIdDataGridViewTextBoxColumn1 = new DataGridViewTextBoxColumn();
+            categoryDataGridViewTextBoxColumn = new DataGridViewTextBoxColumn();
+            rm = new DataGridViewCheckBoxColumn();
+            taskBindingSource = new BindingSource(components);
             label1 = new Label();
             label2 = new Label();
             btn_addcategory = new Button();
             btn_refresh = new Button();
             btn_addTask = new Button();
             categoryBindingSource = new BindingSource(components);
-            categoryBindingSource1 = new BindingSource(components);
-            categoryIdDataGridViewTextBoxColumn = new DataGridViewTextBoxColumn();
-            categoryNameDataGridViewTextBoxColumn = new DataGridViewTextBoxColumn();
-            tasksDataGridViewTextBoxColumn = new DataGridViewTextBoxColumn();
-            btn_delete_category = new DataGridViewButtonColumn();
+            btn_removeSelectedTasks = new Button();
             ((System.ComponentModel.ISupportInitialize)dgv_Categories).BeginInit();
-            ((System.ComponentModel.ISupportInitialize)dgv_Tasks).BeginInit();
-            ((System.ComponentModel.ISupportInitialize)categoryBindingSource).BeginInit();
             ((System.ComponentModel.ISupportInitialize)categoryBindingSource1).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)dgv_Tasks).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)taskBindingSource).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)categoryBindingSource).BeginInit();
             SuspendLayout();
             // 
             // dgv_Categories
@@ -70,14 +80,49 @@
             dgv_Categories.CellClick += dgv_Categories_CellClick;
             dgv_Categories.CellContentClick += dgv_Categories_CellContentClick;
             // 
+            // categoryIdDataGridViewTextBoxColumn
+            // 
+            categoryIdDataGridViewTextBoxColumn.DataPropertyName = "CategoryId";
+            categoryIdDataGridViewTextBoxColumn.HeaderText = "CategoryId";
+            categoryIdDataGridViewTextBoxColumn.Name = "categoryIdDataGridViewTextBoxColumn";
+            categoryIdDataGridViewTextBoxColumn.Visible = false;
+            // 
+            // categoryNameDataGridViewTextBoxColumn
+            // 
+            categoryNameDataGridViewTextBoxColumn.DataPropertyName = "CategoryName";
+            categoryNameDataGridViewTextBoxColumn.HeaderText = "CategoryName";
+            categoryNameDataGridViewTextBoxColumn.Name = "categoryNameDataGridViewTextBoxColumn";
+            // 
+            // tasksDataGridViewTextBoxColumn
+            // 
+            tasksDataGridViewTextBoxColumn.DataPropertyName = "Tasks";
+            tasksDataGridViewTextBoxColumn.HeaderText = "Tasks";
+            tasksDataGridViewTextBoxColumn.Name = "tasksDataGridViewTextBoxColumn";
+            tasksDataGridViewTextBoxColumn.Visible = false;
+            // 
+            // btn_delete_category
+            // 
+            btn_delete_category.AutoSizeMode = DataGridViewAutoSizeColumnMode.None;
+            btn_delete_category.HeaderText = "DELETE";
+            btn_delete_category.Name = "btn_delete_category";
+            btn_delete_category.Text = "X";
+            btn_delete_category.UseColumnTextForButtonValue = true;
+            btn_delete_category.Width = 35;
+            // 
+            // categoryBindingSource1
+            // 
+            categoryBindingSource1.DataSource = typeof(Models.Category);
+            // 
             // dgv_Tasks
             // 
+            dgv_Tasks.AutoGenerateColumns = false;
             dgv_Tasks.AutoSizeColumnsMode = DataGridViewAutoSizeColumnsMode.Fill;
             dgv_Tasks.BackgroundColor = SystemColors.ActiveBorder;
             dgv_Tasks.BorderStyle = BorderStyle.Fixed3D;
             dgv_Tasks.CellBorderStyle = DataGridViewCellBorderStyle.None;
             dgv_Tasks.ColumnHeadersHeightSizeMode = DataGridViewColumnHeadersHeightSizeMode.AutoSize;
-            dgv_Tasks.ColumnHeadersVisible = false;
+            dgv_Tasks.Columns.AddRange(new DataGridViewColumn[] { taskIdDataGridViewTextBoxColumn, titleDataGridViewTextBoxColumn, dateCreatedDataGridViewTextBoxColumn, isCompletedDataGridViewCheckBoxColumn, categoryIdDataGridViewTextBoxColumn1, categoryDataGridViewTextBoxColumn, rm });
+            dgv_Tasks.DataSource = taskBindingSource;
             dgv_Tasks.GridColor = SystemColors.ActiveBorder;
             dgv_Tasks.Location = new Point(302, 143);
             dgv_Tasks.Name = "dgv_Tasks";
@@ -86,6 +131,57 @@
             dgv_Tasks.RowTemplate.DefaultCellStyle.Font = new Font("Microsoft Sans Serif", 9.75F, FontStyle.Bold, GraphicsUnit.Point, 0);
             dgv_Tasks.Size = new Size(604, 490);
             dgv_Tasks.TabIndex = 1;
+            // 
+            // taskIdDataGridViewTextBoxColumn
+            // 
+            taskIdDataGridViewTextBoxColumn.DataPropertyName = "TaskId";
+            taskIdDataGridViewTextBoxColumn.HeaderText = "TaskId";
+            taskIdDataGridViewTextBoxColumn.Name = "taskIdDataGridViewTextBoxColumn";
+            taskIdDataGridViewTextBoxColumn.Visible = false;
+            // 
+            // titleDataGridViewTextBoxColumn
+            // 
+            titleDataGridViewTextBoxColumn.DataPropertyName = "Title";
+            titleDataGridViewTextBoxColumn.HeaderText = "Title";
+            titleDataGridViewTextBoxColumn.Name = "titleDataGridViewTextBoxColumn";
+            // 
+            // dateCreatedDataGridViewTextBoxColumn
+            // 
+            dateCreatedDataGridViewTextBoxColumn.DataPropertyName = "DateCreated";
+            dateCreatedDataGridViewTextBoxColumn.HeaderText = "DateCreated";
+            dateCreatedDataGridViewTextBoxColumn.Name = "dateCreatedDataGridViewTextBoxColumn";
+            // 
+            // isCompletedDataGridViewCheckBoxColumn
+            // 
+            isCompletedDataGridViewCheckBoxColumn.DataPropertyName = "IsCompleted";
+            isCompletedDataGridViewCheckBoxColumn.HeaderText = "IsCompleted";
+            isCompletedDataGridViewCheckBoxColumn.Name = "isCompletedDataGridViewCheckBoxColumn";
+            // 
+            // categoryIdDataGridViewTextBoxColumn1
+            // 
+            categoryIdDataGridViewTextBoxColumn1.DataPropertyName = "CategoryId";
+            categoryIdDataGridViewTextBoxColumn1.HeaderText = "CategoryId";
+            categoryIdDataGridViewTextBoxColumn1.Name = "categoryIdDataGridViewTextBoxColumn1";
+            categoryIdDataGridViewTextBoxColumn1.Visible = false;
+            // 
+            // categoryDataGridViewTextBoxColumn
+            // 
+            categoryDataGridViewTextBoxColumn.DataPropertyName = "Category";
+            categoryDataGridViewTextBoxColumn.HeaderText = "Category";
+            categoryDataGridViewTextBoxColumn.Name = "categoryDataGridViewTextBoxColumn";
+            categoryDataGridViewTextBoxColumn.Visible = false;
+            // 
+            // rm
+            // 
+            rm.FalseValue = "false";
+            rm.HeaderText = "Remove";
+            rm.IndeterminateValue = "";
+            rm.Name = "rm";
+            rm.TrueValue = "true";
+            // 
+            // taskBindingSource
+            // 
+            taskBindingSource.DataSource = typeof(Models.Task);
             // 
             // label1
             // 
@@ -142,38 +238,15 @@
             // 
             categoryBindingSource.DataSource = typeof(Models.Category);
             // 
-            // categoryBindingSource1
+            // btn_removeSelectedTasks
             // 
-            categoryBindingSource1.DataSource = typeof(Models.Category);
-            // 
-            // categoryIdDataGridViewTextBoxColumn
-            // 
-            categoryIdDataGridViewTextBoxColumn.DataPropertyName = "CategoryId";
-            categoryIdDataGridViewTextBoxColumn.HeaderText = "CategoryId";
-            categoryIdDataGridViewTextBoxColumn.Name = "categoryIdDataGridViewTextBoxColumn";
-            categoryIdDataGridViewTextBoxColumn.Visible = false;
-            // 
-            // categoryNameDataGridViewTextBoxColumn
-            // 
-            categoryNameDataGridViewTextBoxColumn.DataPropertyName = "CategoryName";
-            categoryNameDataGridViewTextBoxColumn.HeaderText = "CategoryName";
-            categoryNameDataGridViewTextBoxColumn.Name = "categoryNameDataGridViewTextBoxColumn";
-            // 
-            // tasksDataGridViewTextBoxColumn
-            // 
-            tasksDataGridViewTextBoxColumn.DataPropertyName = "Tasks";
-            tasksDataGridViewTextBoxColumn.HeaderText = "Tasks";
-            tasksDataGridViewTextBoxColumn.Name = "tasksDataGridViewTextBoxColumn";
-            tasksDataGridViewTextBoxColumn.Visible = false;
-            // 
-            // btn_delete_category
-            // 
-            btn_delete_category.AutoSizeMode = DataGridViewAutoSizeColumnMode.None;
-            btn_delete_category.HeaderText = "DELETE";
-            btn_delete_category.Name = "btn_delete_category";
-            btn_delete_category.Text = "X";
-            btn_delete_category.UseColumnTextForButtonValue = true;
-            btn_delete_category.Width = 35;
+            btn_removeSelectedTasks.Location = new Point(748, 639);
+            btn_removeSelectedTasks.Name = "btn_removeSelectedTasks";
+            btn_removeSelectedTasks.Size = new Size(158, 33);
+            btn_removeSelectedTasks.TabIndex = 7;
+            btn_removeSelectedTasks.Text = "Remove Selected Tasks";
+            btn_removeSelectedTasks.UseVisualStyleBackColor = true;
+            btn_removeSelectedTasks.Click += button1_Click;
             // 
             // MainForm
             // 
@@ -181,6 +254,7 @@
             AutoScaleMode = AutoScaleMode.Font;
             BackColor = SystemColors.ActiveBorder;
             ClientSize = new Size(946, 698);
+            Controls.Add(btn_removeSelectedTasks);
             Controls.Add(btn_addTask);
             Controls.Add(btn_refresh);
             Controls.Add(btn_addcategory);
@@ -192,9 +266,10 @@
             Text = "TO DO LIST";
             Load += Form1_Load;
             ((System.ComponentModel.ISupportInitialize)dgv_Categories).EndInit();
-            ((System.ComponentModel.ISupportInitialize)dgv_Tasks).EndInit();
-            ((System.ComponentModel.ISupportInitialize)categoryBindingSource).EndInit();
             ((System.ComponentModel.ISupportInitialize)categoryBindingSource1).EndInit();
+            ((System.ComponentModel.ISupportInitialize)dgv_Tasks).EndInit();
+            ((System.ComponentModel.ISupportInitialize)taskBindingSource).EndInit();
+            ((System.ComponentModel.ISupportInitialize)categoryBindingSource).EndInit();
             ResumeLayout(false);
             PerformLayout();
         }
@@ -214,5 +289,14 @@
         private DataGridViewTextBoxColumn tasksDataGridViewTextBoxColumn;
         private DataGridViewButtonColumn btn_delete_category;
         private BindingSource categoryBindingSource1;
+        private Button btn_removeSelectedTasks;
+        private DataGridViewTextBoxColumn taskIdDataGridViewTextBoxColumn;
+        private DataGridViewTextBoxColumn titleDataGridViewTextBoxColumn;
+        private DataGridViewTextBoxColumn dateCreatedDataGridViewTextBoxColumn;
+        private DataGridViewCheckBoxColumn isCompletedDataGridViewCheckBoxColumn;
+        private DataGridViewTextBoxColumn categoryIdDataGridViewTextBoxColumn1;
+        private DataGridViewTextBoxColumn categoryDataGridViewTextBoxColumn;
+        private DataGridViewCheckBoxColumn rm;
+        private BindingSource taskBindingSource;
     }
 }
